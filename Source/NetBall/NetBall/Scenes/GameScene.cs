@@ -182,7 +182,18 @@ namespace NetBall.Scenes
                     Entity b = getEntity(typeof(Ball));
 
                     if (b != null)
+                    {
+                        // Create score confetti
+                        if (!GameSettings.IS_HOST)
+                        {
+                            for (int i = 0; i < 60; i++)
+                            {
+                                addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y + 64)));
+                            }
+                        }
+
                         removeEntity(b);
+                    }
                 }
 
                 addEntity(new Ball(SceneManager.content, castData.position));
@@ -192,7 +203,7 @@ namespace NetBall.Scenes
                 // Create score confetti
                 for (int i = 0; i < 60; i++)
                 {
-                    addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y)));
+                    addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y + 64)));
                 }
             }
         }

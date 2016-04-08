@@ -84,7 +84,7 @@ namespace NetBall.GameObjects.Entities
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
                         {
-                            //GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
+                            GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
                         }
                     }
                 }
@@ -107,7 +107,7 @@ namespace NetBall.GameObjects.Entities
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
                         {
-                            //GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
+                            GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
                         }
                     }
                 }

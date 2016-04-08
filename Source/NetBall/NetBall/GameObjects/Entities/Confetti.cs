@@ -19,34 +19,37 @@ namespace NetBall.GameObjects.Entities
         private float scale;
         private float rotateSpeed;
         private Vector2 speed;
+        private Vector2 origin;
 
         public Confetti(ContentManager content, Vector2 position)
         {
             this.position = position;
 
-            Random r = new Random();
+            Random r = GameScene.instance.generator;
 
             Color c = new Color((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
 
-            sprite = new Texture2D(BaseGame.instance.GraphicsDevice, 2, 1);
-            sprite.SetData(new Color[] { Color.White });
+            sprite = new Texture2D(BaseGame.instance.GraphicsDevice, 6, 2);
+            sprite.SetData(new Color[] { c });
 
             rotation = MathUtils.randomFloat(r, 0, (float)Math.PI * 2);
-            scale = MathUtils.randomFloat(r, 1, 4);
+            scale = MathUtils.randomFloat(r, 4, 15);
 
-            rotateSpeed = MathUtils.randomFloat(r, -0.2f, 0.2f);
+            rotateSpeed = 0;// MathUtils.randomFloat(r, -0.2f, 0.2f);
 
             if (GameSettings.IS_HOST)
-                speed.X = MathUtils.randomFloat(r, 7, 12);
+                speed.X = MathUtils.randomFloat(r, 7, 15);
             else
-                speed.X = MathUtils.randomFloat(r, -7, -12);
+                speed.X = MathUtils.randomFloat(r, -7, -15);
 
-            speed.Y = MathUtils.randomFloat(r, -1, -4);
+            speed.Y = MathUtils.randomFloat(r, 8, -8);
+
+            origin = new Vector2(3, 1);
         }
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, null, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(sprite, GameSettings.SCREEN_OFFSET + position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 0.01f);
         }
 
         public override void update(GameTime gameTime)
@@ -58,7 +61,7 @@ namespace NetBall.GameObjects.Entities
 
             rotation += rotateSpeed;
 
-            if (speed.Length() < 0.1f)
+            if (Math.Abs(speed.Length()) < 0.5f)
             {
                 ((ActionScene)SceneManager.currentScene).removeEntity(this);
             }
