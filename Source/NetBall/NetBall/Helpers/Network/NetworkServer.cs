@@ -72,6 +72,8 @@ namespace NetBall.Helpers.Network
 
                         // show the data on the console 
                         Console.WriteLine("Text Received: {0}", receivedMsg);
+
+                        MessageUtils.parseMessage(receivedMsg);
                     }
 
                     //close the connection now that the client has disconnected

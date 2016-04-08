@@ -18,6 +18,8 @@ namespace NetBall.Helpers
 
         public static void initialize()
         {
+            eventLists = new Dictionary<MessageType, List<EventListener>>();
+
             // Set up lists
             for (int i = 0; i < Enum.GetNames(typeof(MessageType)).Length; i++)
             {

@@ -46,8 +46,12 @@
     <Compile Include="GameObjects\Entities\HUD\TransitionReceiver.cs" />
     <Compile Include="GameObjects\Props\Prop.cs" />
     <Compile Include="Helpers\AnimatedSprite.cs" />
+    <Compile Include="Helpers\EventListener.cs" />
     <Compile Include="Helpers\GameSettings.cs" />
     <Compile Include="Helpers\MathUtils.cs" />
+    <Compile Include="Helpers\MessageData.cs" />
+    <Compile Include="Helpers\MessageDataBallThrow.cs" />
+    <Compile Include="Helpers\MessageUtils.cs" />
     <Compile Include="Helpers\Network\NetworkClient.cs" />
     <Compile Include="Helpers\Network\NetworkServer.cs" />
     <Compile Include="Helpers\QuadTree\IQuadObject.cs" />
