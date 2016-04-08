@@ -36,7 +36,7 @@ namespace NetBall.Helpers.Network.Messages
             char[] delims = new char[] { '~' };
             string[] pieces = message.Split(delims);
 
-            if (pieces.Length > 1)
+            if (pieces.Length > 0)
             {
                 MessageType type = (MessageType) Enum.Parse(typeof(MessageType), pieces[0]);
                 MessageData data = null;

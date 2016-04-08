@@ -101,6 +101,8 @@ namespace NetBall.GameObjects.Entities
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
 
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
+                            new MessageDataGoal()));
 
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
