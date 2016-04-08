@@ -14,6 +14,7 @@ namespace NetBall.Helpers
         public static Vector2 MAX_LEVEL_SIZE = new Vector2(16000, 16000);
         public static float LEVEL_BUFFER = 128;
         public static Vector2 BALL_OFFSET = new Vector2(352, ScreenHelper.SCREEN_SIZE.Y / 2);
+        public static Vector2 HOOP_POSITION = new Vector2(64, 300);
         public static Vector2 SCREEN_OFFSET = new Vector2(0, 0);
 
         public static int MIN_QUADTREE_LEAF_SIZE = 64;

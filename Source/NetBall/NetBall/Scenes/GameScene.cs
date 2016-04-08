@@ -16,9 +16,11 @@ namespace NetBall.Scenes
     public class GameScene : ActionScene, EventListener
     {
         public Random generator { get; set; }
+        public static GameScene instance;
 
         public GameScene(ContentManager content) : base()
         {
+            instance = this;
             MessageUtils.initialize();
 
             //fetch the network data from the configure file
@@ -46,9 +48,7 @@ namespace NetBall.Scenes
             if (GameSettings.IS_HOST)
             {
                 // Set up the initial round
-                bool ballSide = generator.Next(2) == 0 ? true : false;
-
-                Vector2 ballPos = new Vector2(ScreenHelper.SCREEN_SIZE.X + GameSettings.BALL_OFFSET.X, GameSettings.BALL_OFFSET.Y);
+                Vector2 ballPos = getBallStartPosition();
 
                 NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
                     new MessageDataBallSetup(ballPos)));
@@ -91,6 +91,15 @@ namespace NetBall.Scenes
                 addEntity(b);
                 groundList.Insert(b);
             }
+
+            // Hoops
+            Hoop h = new Hoop(content, GameSettings.HOOP_POSITION, true); 
+            addEntity(h);
+            groundList.Insert(h);
+
+            h = new Hoop(content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y), false);
+            addEntity(h);
+            groundList.Insert(h);
         }
 
        
@@ -138,6 +147,15 @@ namespace NetBall.Scenes
             }
 
             spriteBatch.End();
+        }
+
+        public Vector2 getBallStartPosition()
+        {
+            bool ballSide = generator.Next(2) == 0 ? true : false;
+
+            Vector2 ballPos = new Vector2(ScreenHelper.SCREEN_SIZE.X + GameSettings.BALL_OFFSET.X, GameSettings.BALL_OFFSET.Y);
+
+            return ballPos;
         }
 
         public void eventTriggered(MessageData data)

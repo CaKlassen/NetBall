@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
     <Compile Include="GameObjects\Entities\Ball.cs" />
+    <Compile Include="GameObjects\Entities\Hoop.cs" />
     <Compile Include="GameObjects\Entities\Block.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
     <Compile Include="GameObjects\Entities\EntityCollide.cs" />
