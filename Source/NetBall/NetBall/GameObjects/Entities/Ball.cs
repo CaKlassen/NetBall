@@ -15,6 +15,10 @@ namespace NetBall.GameObjects.Entities
     public class Ball : EntityGravity, EventListener
     {
         private static float MOVE_RATE = 3;
+        private static float GRAVITY = 0.4f;
+        private static float FRICTION = 0.05f;
+        private static float RESTITUTION = 0.9f;
+        private static float SPEED_DIVISOR = 2;
 
         private Texture2D sprite;
         private float rotation = 0;
@@ -44,6 +48,9 @@ namespace NetBall.GameObjects.Entities
 
             if (!held)
             {
+                speed.Y += GRAVITY;
+                speed.X = MathUtils.approach(speed.X, 0, FRICTION);
+
                 if (mouse.LeftButton == ButtonState.Pressed && Vector2.Distance(position, mousePos) <= radius)
                 {
                     held = true;
@@ -51,27 +58,28 @@ namespace NetBall.GameObjects.Entities
             }
             else
             {
-                position.X += MathUtils.smoothChange(position.X, mouse.Position.X, MOVE_RATE);
-                position.Y += MathUtils.smoothChange(position.Y, mouse.Position.Y, MOVE_RATE);
+                position.X += MathUtils.smoothChange(position.X, mousePos.X, MOVE_RATE);
+                position.Y += MathUtils.smoothChange(position.Y, mousePos.Y, MOVE_RATE);
 
                 if (mouse.LeftButton == ButtonState.Released)
                 {
                     held = false;
                     float angle = MathUtils.pointAngle(prevMousePosition, mousePos);
+                    float newSpeed = Vector2.Distance(mousePos, prevMousePosition) / SPEED_DIVISOR;
 
                     if (GameSettings.IS_HOST)
                     {
                         NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,
-                            new MessageDataBallThrow(position, 5, angle)));
+                            new MessageDataBallThrow(position, newSpeed, angle)));
                     }
                     else
                     {
                         NetworkClient.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,
-                            new MessageDataBallThrow(position, 5, angle)));
+                            new MessageDataBallThrow(position, newSpeed, angle)));
                     }
 
-                    speed.X = MathUtils.lengthdirX(angle, 5);
-                    speed.Y = MathUtils.lengthdirY(angle, 5);
+                    speed.X = MathUtils.lengthdirX(angle, newSpeed);
+                    speed.Y = MathUtils.lengthdirY(angle, newSpeed);
                 }
             }
 
@@ -91,6 +99,23 @@ namespace NetBall.GameObjects.Entities
                 position = castData.position;
                 speed.X = MathUtils.lengthdirX(castData.angle, castData.speed);
                 speed.Y = MathUtils.lengthdirY(castData.angle, castData.speed);
+            }
+        }
+
+        protected override void horizontalCollision()
+        {
+            speed.X = -speed.X * RESTITUTION;
+        }
+
+        protected override void verticalCollision()
+        {
+            if (speed.Y < 0.5f)
+            {
+                speed.Y = 0;
+            }
+            else
+            {
+                speed.Y = -speed.Y * RESTITUTION;
             }
         }
     }

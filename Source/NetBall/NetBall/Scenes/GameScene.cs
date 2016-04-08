@@ -66,9 +66,26 @@ namespace NetBall.Scenes
 
         private void initialize(ContentManager content)
         {
-            for (int i = 0; i < 300; i++)
+            int numBlocks = (int)(ScreenHelper.SCREEN_SIZE.X * 2) / 64;
+
+            // Floor
+            for (int i = 0; i < numBlocks; i++)
             {
-                addEntity(new Block(content, new Vector2(GameSettings.SCREEN_OFFSET.X + i * 64, GameSettings.SCREEN_OFFSET.Y + ScreenHelper.SCREEN_SIZE.Y - 64)));
+                Block b = new Block(content, new Vector2(i * 64, GameSettings.SCREEN_OFFSET.Y + ScreenHelper.SCREEN_SIZE.Y - 64));
+                addEntity(b);
+                groundList.Insert(b);
+            }
+
+            // Walls
+            for (int i = 0; i < 20; i++)
+            {
+                Block b = new Block(content, new Vector2(0, GameSettings.SCREEN_OFFSET.Y + i * 64));
+                addEntity(b);
+                groundList.Insert(b);
+
+                b = new Block(content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - 64, GameSettings.SCREEN_OFFSET.Y + i * 64));
+                addEntity(b);
+                groundList.Insert(b);
             }
         }
 

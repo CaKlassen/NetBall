@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NetBall.Helpers;
 
 namespace NetBall.GameObjects.Entities
 {
@@ -22,7 +23,7 @@ namespace NetBall.GameObjects.Entities
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, null, Color.White, 0, origin, 1, SpriteEffects.None, 0.9f);
+            spriteBatch.Draw(sprite, GameSettings.SCREEN_OFFSET + position, null, Color.White, 0, origin, 1, SpriteEffects.None, 0.9f);
         }
 
         public override void update(GameTime gameTime)
