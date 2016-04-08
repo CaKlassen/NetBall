@@ -24,6 +24,7 @@ namespace NetBall.GameObjects.Entities
         private float rotation = 0;
         private float radius;
 
+        private ButtonState prevMouseState;
         private Vector2 prevMousePosition;
         private bool held = false;
 
@@ -38,6 +39,8 @@ namespace NetBall.GameObjects.Entities
             origin = new Vector2(mask.Width / 2, mask.Height / 2);
 
             MessageUtils.registerListener(this, MessageType.BALL_THROW);
+
+            prevMouseState = ButtonState.Released;
         }
 
         public override void update(GameTime gameTime)
@@ -46,22 +49,28 @@ namespace NetBall.GameObjects.Entities
             MouseState mouse = Mouse.GetState();
             Vector2 mousePos = mouse.Position.ToVector2() - GameSettings.SCREEN_OFFSET;
 
+            Rectangle mouseValid = new Rectangle(64 + (int)(radius), 64 + (int)(radius), (int)(ScreenHelper.SCREEN_SIZE.X * 2 - (radius + 64) * 2), (int)(ScreenHelper.SCREEN_SIZE.Y - (radius + 64) * 2));
+            Rectangle centreArea = new Rectangle((int)(ScreenHelper.SCREEN_SIZE.X - radius), 0, (int)radius * 2, (int)ScreenHelper.SCREEN_SIZE.Y);
+
             if (!held)
             {
                 speed.Y += GRAVITY;
                 speed.X = MathUtils.approach(speed.X, 0, FRICTION);
 
-                if (mouse.LeftButton == ButtonState.Pressed && Vector2.Distance(position, mousePos) <= radius)
+                if (mouse.LeftButton == ButtonState.Pressed && prevMouseState == ButtonState.Released &&
+                    mouseValid.Contains(mousePos) && !centreArea.Contains(mousePos) && Vector2.Distance(position, mousePos) <= radius)
                 {
                     held = true;
                 }
             }
             else
             {
+                speed = Vector2.Zero;
+
                 position.X += MathUtils.smoothChange(position.X, mousePos.X, MOVE_RATE);
                 position.Y += MathUtils.smoothChange(position.Y, mousePos.Y, MOVE_RATE);
 
-                if (mouse.LeftButton == ButtonState.Released)
+                if (mouse.LeftButton == ButtonState.Released || !mouseValid.Contains(mousePos) || centreArea.Contains(mousePos))
                 {
                     held = false;
                     float angle = MathUtils.pointAngle(prevMousePosition, mousePos);
@@ -84,6 +93,7 @@ namespace NetBall.GameObjects.Entities
             }
 
             prevMousePosition = mousePos;
+            prevMouseState = mouse.LeftButton;
         }
 
         public override void draw(SpriteBatch spriteBatch)

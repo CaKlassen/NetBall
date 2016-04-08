@@ -71,7 +71,11 @@ namespace NetBall.Scenes
             // Floor
             for (int i = 0; i < numBlocks; i++)
             {
-                Block b = new Block(content, new Vector2(i * 64, GameSettings.SCREEN_OFFSET.Y + ScreenHelper.SCREEN_SIZE.Y - 64));
+                Block b = new Block(content, new Vector2(i * 64, ScreenHelper.SCREEN_SIZE.Y - 64));
+                addEntity(b);
+                groundList.Insert(b);
+
+                b = new Block(content, new Vector2(i * 64, 0));
                 addEntity(b);
                 groundList.Insert(b);
             }
