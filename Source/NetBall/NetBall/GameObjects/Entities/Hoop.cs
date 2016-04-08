@@ -78,13 +78,13 @@ namespace NetBall.GameObjects.Entities
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
 
 
-                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
-                            new MessageDataGoal()));
+                        //NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
+                        //    new MessageDataGoal()));
 
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
                         {
-                            GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
+                            //GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
                         }
                     }
                 }
@@ -101,13 +101,13 @@ namespace NetBall.GameObjects.Entities
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
 
-                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
-                            new MessageDataGoal()));
+                        //NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
+                        //    new MessageDataGoal()));
 
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
                         {
-                            GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
+                            //GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
                         }
                     }
                 }
