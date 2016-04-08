@@ -124,7 +124,7 @@ namespace NetBall.Scenes
             if (data.GetType() == typeof(MessageDataBallSetup))
             {
                 MessageDataBallSetup castData = (MessageDataBallSetup)data;
-                addEntity(new Ball(SceneManager.content, GameSettings.SCREEN_OFFSET + castData.position));
+                addEntity(new Ball(SceneManager.content, castData.position));
             }
         }
     }

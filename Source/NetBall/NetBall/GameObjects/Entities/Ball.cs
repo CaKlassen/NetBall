@@ -40,10 +40,11 @@ namespace NetBall.GameObjects.Entities
         {
             base.update(gameTime);
             MouseState mouse = Mouse.GetState();
+            Vector2 mousePos = mouse.Position.ToVector2() - GameSettings.SCREEN_OFFSET;
 
             if (!held)
             {
-                if (mouse.LeftButton == ButtonState.Pressed && Vector2.Distance(position, mouse.Position.ToVector2()) <= radius)
+                if (mouse.LeftButton == ButtonState.Pressed && Vector2.Distance(position, mousePos) <= radius)
                 {
                     held = true;
                 }
@@ -56,7 +57,7 @@ namespace NetBall.GameObjects.Entities
                 if (mouse.LeftButton == ButtonState.Released)
                 {
                     held = false;
-                    float angle = MathUtils.pointAngle(prevMousePosition, mouse.Position.ToVector2());
+                    float angle = MathUtils.pointAngle(prevMousePosition, mousePos);
 
                     if (GameSettings.IS_HOST)
                     {
@@ -74,12 +75,12 @@ namespace NetBall.GameObjects.Entities
                 }
             }
 
-            prevMousePosition = mouse.Position.ToVector2();
+            prevMousePosition = mousePos;
         }
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, null, Color.White, rotation, origin, 1, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(sprite, GameSettings.SCREEN_OFFSET + position, null, Color.White, rotation, origin, 1, SpriteEffects.None, 0.5f);
         }
 
         public void eventTriggered(MessageData data)
@@ -87,6 +88,7 @@ namespace NetBall.GameObjects.Entities
             if (data.GetType() == typeof(MessageDataBallThrow))
             {
                 MessageDataBallThrow castData = (MessageDataBallThrow)data;
+                position = castData.position;
                 speed.X = MathUtils.lengthdirX(castData.angle, castData.speed);
                 speed.Y = MathUtils.lengthdirY(castData.angle, castData.speed);
             }
