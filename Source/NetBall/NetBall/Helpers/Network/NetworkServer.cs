@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using NetBall.Helpers.Network.Messages;
 
 namespace NetBall.Helpers.Network
 {
@@ -64,6 +65,7 @@ namespace NetBall.Helpers.Network
                     peer = listener.Accept();
 
                     Console.WriteLine("Peer has connected");
+                    GameSettings.CONNECTED = true;
 
                     //once the peer is connected, read for data
                     while (peer.Connected)
@@ -78,6 +80,7 @@ namespace NetBall.Helpers.Network
 
                     //close the connection now that the client has disconnected
                     closeConnection();
+                    GameSettings.CONNECTED = false;
                 }
             }
             catch (Exception e)

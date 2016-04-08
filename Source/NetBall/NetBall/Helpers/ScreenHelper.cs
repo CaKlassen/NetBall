@@ -8,8 +8,8 @@ namespace NetBall.Helpers
 {
     public static class ScreenHelper
     {
-        public static Vector2 SCREEN_SIZE = new Vector2(672, 384);
-        public static float SCREEN_SCALE = 2f;
+        public static Vector2 SCREEN_SIZE = new Vector2(1344, 768);
+        public static float SCREEN_SCALE = 1f;
         public static Vector2 VIEW_SIZE = SCREEN_SIZE * SCREEN_SCALE;
 
         /// <summary>
