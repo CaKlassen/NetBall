@@ -64,6 +64,12 @@ namespace NetBall.GameObjects.Entities
                 {
                     held = true;
 
+
+                    if (GameSettings.IS_HOST)
+                        GameSettings.P1_TOUCHED_LAST = true;
+                    else
+                        GameSettings.P1_TOUCHED_LAST = false;
+
                     if (GameSettings.IS_HOST)
                     {
                         NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,

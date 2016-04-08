@@ -96,8 +96,8 @@ namespace NetBall.GameObjects.Entities
                         GameScene.instance.removeEntity(ball);
                         Vector2 ballPos = GameScene.instance.getBallStartPosition();
 
-                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
-                            new MessageDataGoal()));
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
+                            new MessageDataBallSetup(ballPos)));
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
 
