@@ -14,12 +14,12 @@ namespace NetBall.Helpers.Network
         private static int MESSAGE_SIZE = 1024;
 
         private int port;
-        private String peerName;
+        private string peerName;
 
         Socket listener;
         Socket peer;
 
-        public NetworkServer(String peer, int listeningPort)
+        public NetworkServer(string peer, int listeningPort)
         {
             this.peerName = peer;
             this.port = listeningPort;
@@ -44,7 +44,7 @@ namespace NetBall.Helpers.Network
             IPAddress ipAddr = ipHostInfo.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
 
-            Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             // bind the socket to the local endpoint and 
             // listen to the incoming sockets 
@@ -64,7 +64,7 @@ namespace NetBall.Helpers.Network
                     //once the peer is connected, read for data
                     while (peer.Connected)
                     {
-                        String receivedMsg = readData();
+                        string receivedMsg = readData();
 
                         // show the data on the console 
                         Console.WriteLine("Text Received: {0}", receivedMsg);
@@ -81,7 +81,7 @@ namespace NetBall.Helpers.Network
         }
 
 
-        private String readData()
+        private string readData()
         {
             string data = null;
 
@@ -92,7 +92,7 @@ namespace NetBall.Helpers.Network
             return data;
         }
          
-        private void sendData(String message)
+        private void sendData(string message)
         {
             byte[] messageBytes = Encoding.ASCII.GetBytes(message);
 
