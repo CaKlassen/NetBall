@@ -76,6 +76,13 @@ namespace NetBall.GameObjects.Entities
                             new MessageDataBallSetup(ballPos)));
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
+
+
+                        // Create score confetti
+                        for (int i = 0; i < 60; i++)
+                        {
+                            GameScene.instance.addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y)));
+                        }
                     }
                 }
                 else
@@ -90,6 +97,13 @@ namespace NetBall.GameObjects.Entities
                             new MessageDataBallSetup(ballPos)));
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
+
+
+                        // Create score confetti
+                        for (int i = 0; i < 60; i++)
+                        {
+                            GameScene.instance.addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y)));
+                        }
                     }
                 }
             }

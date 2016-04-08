@@ -9,7 +9,8 @@ namespace NetBall.Helpers.Network.Messages
     public enum MessageType
     {
         BALL_THROW,
-        BALL_SETUP
+        BALL_SETUP,
+        GOAL
     }
 
     public static class MessageUtils
@@ -59,6 +60,11 @@ namespace NetBall.Helpers.Network.Messages
 
                         break;
                     }
+                    case MessageType.GOAL:
+                    {
+                        data = new MessageDataGoal();
+                        break;
+                    }
                 }
 
                 triggerEvent(type, data);
@@ -86,6 +92,10 @@ namespace NetBall.Helpers.Network.Messages
                     MessageDataBallSetup castData = (MessageDataBallSetup)data;
                     message += castData.position.X + "~" + castData.position.Y;
 
+                    break;
+                }
+                case MessageType.GOAL:
+                {
                     break;
                 }
             }

@@ -61,13 +61,18 @@ namespace NetBall.Scenes
                 GameSettings.SCREEN_OFFSET.X = -ScreenHelper.SCREEN_SIZE.X;
             }
 
+            MessageUtils.registerListener(this, MessageType.GOAL);
             initialize(content);
         }
 
         private void initialize(ContentManager content)
         {
             // Background
-            addDeco(new Prop(content.Load<Texture2D>("Sprites/Background"), Vector2.Zero, 1.0f, false));
+            if (GameSettings.IS_HOST)
+                addDeco(new Prop(content.Load<Texture2D>("Sprites/BackgroundLeft"), Vector2.Zero, 1.0f, false));
+            else
+                addDeco(new Prop(content.Load<Texture2D>("Sprites/BackgroundRight"), Vector2.Zero, 1.0f, false));
+
 
             int numBlocks = (int)(ScreenHelper.SCREEN_SIZE.X * 2) / 64;
 
@@ -156,7 +161,12 @@ namespace NetBall.Scenes
         {
             bool ballSide = generator.Next(2) == 0 ? true : false;
 
-            Vector2 ballPos = new Vector2(ScreenHelper.SCREEN_SIZE.X + GameSettings.BALL_OFFSET.X, GameSettings.BALL_OFFSET.Y);
+            Vector2 ballPos;
+            
+            if (ballSide)
+                ballPos = new Vector2(ScreenHelper.SCREEN_SIZE.X + GameSettings.BALL_OFFSET.X, GameSettings.BALL_OFFSET.Y);
+            else
+                ballPos = new Vector2(ScreenHelper.SCREEN_SIZE.X - GameSettings.BALL_OFFSET.X, GameSettings.BALL_OFFSET.Y);
 
             return ballPos;
         }
@@ -176,6 +186,14 @@ namespace NetBall.Scenes
                 }
 
                 addEntity(new Ball(SceneManager.content, castData.position));
+            }
+            else
+            {
+                // Create score confetti
+                for (int i = 0; i < 60; i++)
+                {
+                    addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y)));
+                }
             }
         }
     }
