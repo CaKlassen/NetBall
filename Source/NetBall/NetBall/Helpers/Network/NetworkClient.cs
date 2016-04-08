@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetBall.Helpers.Network.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -71,6 +72,8 @@ namespace NetBall.Helpers.Network
 
                 // show the data on the console 
                 Console.WriteLine("Text Received: {0}", receivedMsg);
+
+                MessageUtils.parseMessage(receivedMsg);
             }
 
             GameSettings.CONNECTED = false;

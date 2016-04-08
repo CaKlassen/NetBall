@@ -50,13 +50,14 @@ namespace NetBall.Scenes
 
                 Vector2 ballPos = new Vector2(ScreenHelper.SCREEN_SIZE.X + GameSettings.BALL_OFFSET.X, GameSettings.BALL_OFFSET.Y);
 
-                NetworkClient.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
+                NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
                     new MessageDataBallSetup(ballPos)));
 
                 addEntity(new Ball(content, ballPos));
             }
             else
             {
+                MessageUtils.registerListener(this, MessageType.BALL_SETUP);
                 GameSettings.SCREEN_OFFSET.X = -ScreenHelper.SCREEN_SIZE.X;
             }
 
@@ -67,7 +68,7 @@ namespace NetBall.Scenes
         {
             for (int i = 0; i < 300; i++)
             {
-                addEntity(new Block(content, new Vector2(GameSettings.SCREEN_OFFSET.X + i * 64, GameSettings.SCREEN_OFFSET.Y)));
+                addEntity(new Block(content, new Vector2(GameSettings.SCREEN_OFFSET.X + i * 64, GameSettings.SCREEN_OFFSET.Y + ScreenHelper.SCREEN_SIZE.Y - 64)));
             }
         }
 
