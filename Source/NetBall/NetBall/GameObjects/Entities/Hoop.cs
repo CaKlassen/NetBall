@@ -16,6 +16,7 @@ namespace NetBall.GameObjects.Entities
     {
         private Texture2D spriteBack;
         private Texture2D spriteFront;
+        private Texture2D spriteLights;
 
         private bool leftSide;
 
@@ -27,12 +28,13 @@ namespace NetBall.GameObjects.Entities
 
             spriteBack = content.Load<Texture2D>("Sprites/HoopBack");
             spriteFront = content.Load<Texture2D>("Sprites/HoopFront");
+            spriteLights = content.Load<Texture2D>("Sprites/HoopLights");
             mask = content.Load<Texture2D>("Sprites/HoopMask");
 
             this.leftSide = leftSide;
 
             if (leftSide)
-                origin = new Vector2(-spriteFront.Width + 32,  -spriteFront.Height / 2);
+                origin = new Vector2(-spriteFront.Width + mask.Width,  -spriteFront.Height / 2);
             else
                 origin = new Vector2(spriteFront.Width, -spriteFront.Height / 2);
         }
@@ -42,11 +44,13 @@ namespace NetBall.GameObjects.Entities
             if (leftSide)
             {
                 spriteBatch.Draw(spriteFront, GameSettings.SCREEN_OFFSET + position, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.2f);
+                spriteBatch.Draw(spriteLights, GameSettings.SCREEN_OFFSET + position, null, GameSettings.P1_COLOR, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
                 spriteBatch.Draw(spriteBack, GameSettings.SCREEN_OFFSET + position, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.7f);
             }
             else
             {
                 spriteBatch.Draw(spriteFront, GameSettings.SCREEN_OFFSET + position + new Vector2(-spriteBack.Width, 0), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0.2f);
+                spriteBatch.Draw(spriteLights, GameSettings.SCREEN_OFFSET + position + new Vector2(-spriteBack.Width, 0), null, GameSettings.P2_COLOR, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0.1f);
                 spriteBatch.Draw(spriteBack, GameSettings.SCREEN_OFFSET + position + new Vector2(-spriteBack.Width, 0), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.FlipHorizontally, 0.7f);
             }
         }
@@ -68,7 +72,7 @@ namespace NetBall.GameObjects.Entities
                         GameScene.instance.removeEntity(ball);
                         Vector2 ballPos = GameScene.instance.getBallStartPosition();
 
-                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
                             new MessageDataBallSetup(ballPos)));
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
@@ -82,7 +86,7 @@ namespace NetBall.GameObjects.Entities
                         GameScene.instance.removeEntity(ball);
                         Vector2 ballPos = GameScene.instance.getBallStartPosition();
 
-                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
                             new MessageDataBallSetup(ballPos)));
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));

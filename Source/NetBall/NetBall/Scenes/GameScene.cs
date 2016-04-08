@@ -163,6 +163,15 @@ namespace NetBall.Scenes
             if (data.GetType() == typeof(MessageDataBallSetup))
             {
                 MessageDataBallSetup castData = (MessageDataBallSetup)data;
+
+                if (!GameSettings.IS_HOST)
+                {
+                    Entity b = getEntity(typeof(Ball));
+
+                    if (b != null)
+                        removeEntity(b);
+                }
+
                 addEntity(new Ball(SceneManager.content, castData.position));
             }
         }

@@ -21,6 +21,7 @@ namespace NetBall.GameObjects.Entities
         private static float SPEED_DIVISOR = 2;
 
         private Texture2D sprite;
+        private Texture2D spriteLights;
         private float rotation = 0;
         private float radius;
 
@@ -33,6 +34,7 @@ namespace NetBall.GameObjects.Entities
             this.position = position;
 
             sprite = content.Load<Texture2D>("Sprites/Ball");
+            spriteLights = content.Load<Texture2D>("Sprites/BallLights");
             mask = sprite;
 
             radius = mask.Width / 2;
@@ -99,6 +101,9 @@ namespace NetBall.GameObjects.Entities
         public override void draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, GameSettings.SCREEN_OFFSET + position, null, Color.White, rotation, origin, 1, SpriteEffects.None, 0.5f);
+
+            Color c = GameSettings.IS_HOST ? GameSettings.P1_COLOR : GameSettings.P2_COLOR;
+            spriteBatch.Draw(spriteLights, GameSettings.SCREEN_OFFSET + position, null, c, rotation, origin, 1, SpriteEffects.None, 0.49f);
         }
 
         public void eventTriggered(MessageData data)

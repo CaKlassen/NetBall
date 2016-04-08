@@ -17,6 +17,9 @@ namespace NetBall.Helpers
         public static Vector2 HOOP_POSITION = new Vector2(64, 300);
         public static Vector2 SCREEN_OFFSET = new Vector2(0, 0);
 
+        public static Color P1_COLOR = new Color(1, 0, 1);
+        public static Color P2_COLOR = new Color(0, 1, 0);
+
         public static int MIN_QUADTREE_LEAF_SIZE = 64;
         public static int MIN_QUADTREE_ELEMENTS = 10;
 
