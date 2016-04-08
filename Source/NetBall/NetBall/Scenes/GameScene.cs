@@ -14,6 +14,8 @@ namespace NetBall.Scenes
     {
         public GameScene(ContentManager content) : base()
         {
+            MessageUtils.initialize();
+
             //fetch the network data from the configure file
             FileData data = StartupUtils.readfileData();
 
@@ -29,6 +31,13 @@ namespace NetBall.Scenes
                 netClient.connectClient();
             }
 
+
+            // TODO: Proper data transfer
+            if (!data.isHost)
+            {
+                NetworkClient.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW, 
+                    new MessageDataBallThrow(new Vector2(50, 50), 5, (float)Math.PI)));
+            }
         }
        
         public override void update(GameTime gameTime)

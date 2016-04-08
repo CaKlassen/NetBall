@@ -13,6 +13,8 @@ namespace NetBall.Helpers.Network
         /** Constants **/
         private static int MESSAGE_SIZE = 1024;
 
+        public static NetworkClient instance;
+
         private int port;
         private string peerName;
         private bool connected;
@@ -21,6 +23,8 @@ namespace NetBall.Helpers.Network
 
         public NetworkClient(string peer, int p)
         {
+            instance = this;
+
             this.peerName = peer;
             this.port = p;
         }
@@ -83,7 +87,7 @@ namespace NetBall.Helpers.Network
             return data;
         }
 
-        private void sendData(string message)
+        public void sendData(string message)
         {
             byte[] messageBytes = Encoding.ASCII.GetBytes(message);
 
