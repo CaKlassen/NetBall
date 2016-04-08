@@ -66,6 +66,9 @@ namespace NetBall.Scenes
 
         private void initialize(ContentManager content)
         {
+            // Background
+            addDeco(new Prop(content.Load<Texture2D>("Sprites/Background"), Vector2.Zero, 1.0f, false));
+
             int numBlocks = (int)(ScreenHelper.SCREEN_SIZE.X * 2) / 64;
 
             // Floor
