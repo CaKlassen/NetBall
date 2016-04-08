@@ -86,11 +86,11 @@ namespace NetBall.Scenes
             // Walls
             for (int i = 0; i < 20; i++)
             {
-                Block b = new Block(content, new Vector2(0, GameSettings.SCREEN_OFFSET.Y + i * 64));
+                Block b = new Block(content, new Vector2(-64, GameSettings.SCREEN_OFFSET.Y + i * 64));
                 addEntity(b);
                 groundList.Insert(b);
 
-                b = new Block(content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - 64, GameSettings.SCREEN_OFFSET.Y + i * 64));
+                b = new Block(content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2, GameSettings.SCREEN_OFFSET.Y + i * 64));
                 addEntity(b);
                 groundList.Insert(b);
             }

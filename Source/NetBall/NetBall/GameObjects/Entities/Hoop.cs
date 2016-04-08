@@ -66,7 +66,7 @@ namespace NetBall.GameObjects.Entities
 
                 if (leftSide)
                 {
-                    if (b.Position.X < position.X - origin.X && b.Position.X > position.X && 
+                    if (b.Position.X < position.X - origin.X - 8 && b.Position.X > position.X && 
                         b.Position.Y > position.Y - origin.Y && prevBallPosition.Y < position.Y - origin.Y)
                     {
                         GameScene.instance.removeEntity(ball);
@@ -80,7 +80,7 @@ namespace NetBall.GameObjects.Entities
                 }
                 else
                 {
-                    if (b.Position.X > position.X - origin.X && b.Position.X < position.X &&
+                    if (b.Position.X > position.X - origin.X + 8 && b.Position.X < position.X &&
                         b.Position.Y > position.Y - origin.Y && prevBallPosition.Y < position.Y - origin.Y)
                     {
                         GameScene.instance.removeEntity(ball);

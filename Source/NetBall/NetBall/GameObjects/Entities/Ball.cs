@@ -102,7 +102,7 @@ namespace NetBall.GameObjects.Entities
         {
             spriteBatch.Draw(sprite, GameSettings.SCREEN_OFFSET + position, null, Color.White, rotation, origin, 1, SpriteEffects.None, 0.5f);
 
-            Color c = GameSettings.IS_HOST ? GameSettings.P1_COLOR : GameSettings.P2_COLOR;
+            Color c = GameSettings.P1_TOUCHED_LAST ? GameSettings.P1_COLOR : GameSettings.P2_COLOR;
             spriteBatch.Draw(spriteLights, GameSettings.SCREEN_OFFSET + position, null, c, rotation, origin, 1, SpriteEffects.None, 0.49f);
         }
 
@@ -110,6 +110,11 @@ namespace NetBall.GameObjects.Entities
         {
             if (data.GetType() == typeof(MessageDataBallThrow))
             {
+                if (GameSettings.IS_HOST)
+                    GameSettings.P1_TOUCHED_LAST = false;
+                else
+                    GameSettings.P1_TOUCHED_LAST = true;
+
                 MessageDataBallThrow castData = (MessageDataBallThrow)data;
                 position = castData.position;
                 speed.X = MathUtils.lengthdirX(castData.angle, castData.speed);
