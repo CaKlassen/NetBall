@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NetBall.Helpers
+namespace NetBall.Helpers.Network.Messages
 {
     public enum MessageType
     {
-        BALL_THROW
+        BALL_THROW,
+        BALL_SETUP
     }
 
     public static class MessageUtils
@@ -43,14 +44,21 @@ namespace NetBall.Helpers
                 switch(type)
                 {
                     case MessageType.BALL_THROW:
-                        {
-                            Vector2 pos = new Vector2(float.Parse(pieces[1]), float.Parse(pieces[2]));
-                            float speed = float.Parse(pieces[3]);
-                            float angle = float.Parse(pieces[4]);
-                            data = new MessageDataBallThrow(pos, speed, angle);
+                    {
+                        Vector2 pos = new Vector2(float.Parse(pieces[1]), float.Parse(pieces[2]));
+                        float speed = float.Parse(pieces[3]);
+                        float angle = float.Parse(pieces[4]);
+                        data = new MessageDataBallThrow(pos, speed, angle);
 
-                            break;
-                        }
+                        break;
+                    }
+                    case MessageType.BALL_SETUP:
+                    {
+                        Vector2 pos = new Vector2(float.Parse(pieces[1]), float.Parse(pieces[2]));
+                        data = new MessageDataBallSetup(pos);
+
+                        break;
+                    }
                 }
 
                 triggerEvent(type, data);
@@ -65,14 +73,21 @@ namespace NetBall.Helpers
             switch(type)
             {
                 case MessageType.BALL_THROW:
-                    {
-                        MessageDataBallThrow castData = (MessageDataBallThrow)data;
-                        message += castData.position.X + "~" + castData.position.Y + "~";
-                        message += castData.speed + "~";
-                        message += castData.angle;
+                {
+                    MessageDataBallThrow castData = (MessageDataBallThrow)data;
+                    message += castData.position.X + "~" + castData.position.Y + "~";
+                    message += castData.speed + "~";
+                    message += castData.angle;
 
-                        break;
-                    }
+                    break;
+                }
+                case MessageType.BALL_SETUP:
+                {
+                    MessageDataBallSetup castData = (MessageDataBallSetup)data;
+                    message += castData.position.X + "~" + castData.position.Y;
+
+                    break;
+                }
             }
 
             return message;

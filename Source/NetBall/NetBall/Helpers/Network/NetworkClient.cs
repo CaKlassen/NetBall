@@ -44,6 +44,7 @@ namespace NetBall.Helpers.Network
                 sock.Connect(ipEndPoint);
 
                 Console.WriteLine("Socket connected to {0}", sock.RemoteEndPoint.ToString());
+                GameSettings.CONNECTED = true;
 
                 connected = true;
             }
@@ -71,6 +72,8 @@ namespace NetBall.Helpers.Network
                 // show the data on the console 
                 Console.WriteLine("Text Received: {0}", receivedMsg);
             }
+
+            GameSettings.CONNECTED = false;
         }
 
 

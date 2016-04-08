@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NetBall.Helpers
+namespace NetBall.Helpers.Network.Messages
 {
     public class MessageDataBallThrow : MessageData
     {
