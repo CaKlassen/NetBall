@@ -48,9 +48,12 @@
     <Compile Include="Helpers\AnimatedSprite.cs" />
     <Compile Include="Helpers\GameSettings.cs" />
     <Compile Include="Helpers\MathUtils.cs" />
+    <Compile Include="Helpers\Network\NetworkClient.cs" />
+    <Compile Include="Helpers\Network\NetworkServer.cs" />
     <Compile Include="Helpers\QuadTree\IQuadObject.cs" />
     <Compile Include="Helpers\QuadTree\QuadTree.cs" />
     <Compile Include="Helpers\ScreenHelper.cs" />
+    <Compile Include="Helpers\StartupUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\ActionScene.cs" />
