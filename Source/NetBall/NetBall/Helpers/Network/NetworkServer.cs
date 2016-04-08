@@ -40,7 +40,8 @@ namespace NetBall.Helpers.Network
         private void connectedState()
         {
             //convert the peer's IP from a string and create the end point
-            IPAddress ipAddr = IPAddress.Parse(peerName);
+            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+            IPAddress ipAddr = ipHostInfo.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
 
             Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -57,6 +58,8 @@ namespace NetBall.Helpers.Network
                 {
                     // Start listening for connections 
                     peer = listener.Accept();
+
+                    Console.WriteLine("Peer has connected");
 
                     //once the peer is connected, read for data
                     while (peer.Connected)
