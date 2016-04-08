@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
     <Compile Include="GameObjects\Entities\Ball.cs" />
+    <Compile Include="GameObjects\Entities\Confetti.cs" />
     <Compile Include="GameObjects\Entities\Hoop.cs" />
     <Compile Include="GameObjects\Entities\Block.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Helpers\MathUtils.cs" />
     <Compile Include="Helpers\Network\Messages\MessageData.cs" />
     <Compile Include="Helpers\Network\Messages\MessageDataBallSetup.cs" />
+    <Compile Include="Helpers\Network\Messages\MessageDataGoal.cs" />
     <Compile Include="Helpers\Network\Messages\MessageDataBallThrow.cs" />
     <Compile Include="Helpers\Network\Messages\MessageUtils.cs" />
     <Compile Include="Helpers\Network\NetworkClient.cs" />

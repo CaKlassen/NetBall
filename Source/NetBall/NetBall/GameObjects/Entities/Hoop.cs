@@ -78,10 +78,13 @@ namespace NetBall.GameObjects.Entities
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
 
 
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
+                            new MessageDataGoal()));
+
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
                         {
-                            GameScene.instance.addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y)));
+                            GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
                         }
                     }
                 }
@@ -93,8 +96,8 @@ namespace NetBall.GameObjects.Entities
                         GameScene.instance.removeEntity(ball);
                         Vector2 ballPos = GameScene.instance.getBallStartPosition();
 
-                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_SETUP,
-                            new MessageDataBallSetup(ballPos)));
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.GOAL,
+                            new MessageDataGoal()));
 
                         GameScene.instance.addEntity(new Ball(SceneManager.content, ballPos));
 
@@ -102,7 +105,7 @@ namespace NetBall.GameObjects.Entities
                         // Create score confetti
                         for (int i = 0; i < 60; i++)
                         {
-                            GameScene.instance.addEntity(new Confetti(SceneManager.content, new Vector2(ScreenHelper.SCREEN_SIZE.X * 2 - GameSettings.HOOP_POSITION.X, GameSettings.HOOP_POSITION.Y)));
+                            GameScene.instance.addEntity(new Confetti(SceneManager.content, GameSettings.HOOP_POSITION));
                         }
                     }
                 }

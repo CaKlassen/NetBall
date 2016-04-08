@@ -63,6 +63,17 @@ namespace NetBall.GameObjects.Entities
                     mouseValid.Contains(mousePos) && !centreArea.Contains(mousePos) && Vector2.Distance(position, mousePos) <= radius)
                 {
                     held = true;
+
+                    if (GameSettings.IS_HOST)
+                    {
+                        NetworkServer.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,
+                            new MessageDataBallThrow(position, 0, 0)));
+                    }
+                    else
+                    {
+                        NetworkClient.instance.sendData(MessageUtils.constructMessage(MessageType.BALL_THROW,
+                            new MessageDataBallThrow(position, 0, 0)));
+                    }
                 }
             }
             else
