@@ -31,18 +31,6 @@ namespace NetBall.Helpers.Network
 
         public void connectClient()
         {
-            //Create a reference to a new thread
-            ThreadStart networkThreadRef = new ThreadStart(connectedState);
-
-            //create a new thread
-            Thread networkThread = new Thread(networkThreadRef);
-
-            //start the thread
-            networkThread.Start();
-        }
-
-        private void connectedState()
-        {
             //convert the peer's IP from a string and create the end point
             IPAddress ipAddr = IPAddress.Parse(peerName);
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
@@ -58,21 +46,31 @@ namespace NetBall.Helpers.Network
                 Console.WriteLine("Socket connected to {0}", sock.RemoteEndPoint.ToString());
 
                 connected = true;
-
-                while (connected)
-                {
-                    string receivedMsg = readData();
-
-                    // show the data on the console 
-                    Console.WriteLine("Text Received: {0}", receivedMsg);
-                }
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-          
+
+            //Create a reference to a new thread
+            ThreadStart networkThreadRef = new ThreadStart(connectedState);
+
+            //create a new thread
+            Thread networkThread = new Thread(networkThreadRef);
+
+            //start the thread
+            networkThread.Start();
+        }
+
+        private void connectedState()
+        {
+            while (connected)
+            {
+                string receivedMsg = readData();
+
+                // show the data on the console 
+                Console.WriteLine("Text Received: {0}", receivedMsg);
+            }
         }
 
 
